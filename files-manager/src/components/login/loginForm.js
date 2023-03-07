@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import Header from './header';
+import axios from "axios";
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -47,14 +48,28 @@ function LoginForm() {
     const isValid = validate();
 
     if (isValid) {
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
+      console.log(formData);
+     // axios.defaults.headers.common['X-CSRF-TOKEN'] = token_var;
+      axios.post("http://127.0.0.1:8000/api/login", formData)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       console.log(email, password);
     }
   };
 
+
   return (
+    <div className="Login">
     <div className="Header">
       <Header />
-      <div className="form">
+      <div className="form" >
         <div className="form-body">
           
           <div className="email">
@@ -99,6 +114,7 @@ function LoginForm() {
             <div class="footer">
                 <button onClick={()=>handleSubmit()} type="submit" class="btn">Log In</button>
             </div>
+        </div>
         </div>
         </div>
     )       
