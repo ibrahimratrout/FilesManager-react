@@ -1,42 +1,27 @@
-import axios from "axios";
 import Navbar from "../../navbar/Navbar";
 import Sidebar from "../../sidebar/Sidebar";
 import "./style.scss";
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
+import axiosClient from "../../../axios";
 
 const ImportFile = () => {
   const [file, setFile] = useState("");
   const [label, setLabel] = useState("");
   const [name, setName] = useState("");
-  const [csrfToken, setCsrfToken] = useState("");
-
-  useEffect(() => {
-    setCsrfToken(document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-  }, []);
-
+  
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const token = "6|aXXMrkN9KcEEcnxxFK0Nr1EJ1G4gYRYMaMaTIb5o";
     const formData = new FormData();
     formData.append("file", file);
     formData.append("label", label);
     formData.append("name", name);
-    console.log(formData);
-
-    axios.post("http://127.0.0.1:8000/api/import-file", formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
-        'X-CSRF-TOKEN': csrfToken
-      }
-    })
+     axiosClient.post("/import-file", formData)
       .then((response) => {
           alert("The file imported successfully")
         console.log(response.data);
       })
       .catch((error) => {
         alert("The file imported fail")
-
         console.log(error);
       });
   }

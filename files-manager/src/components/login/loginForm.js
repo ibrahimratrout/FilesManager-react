@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import Header from './header';
-import axios from "axios";
+import axiosClient from '../../axios';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -51,10 +51,10 @@ function LoginForm() {
       const formData = new FormData();
       formData.append("email", email);
       formData.append("password", password);
-      console.log(formData);
-     // axios.defaults.headers.common['X-CSRF-TOKEN'] = token_var;
-      axios.post("http://127.0.0.1:8000/api/login", formData)
+      axiosClient.post("/login", formData)
         .then((response) => {
+          const token = response.data.token;
+          localStorage.setItem("ACCESS_TOKEN", token);
           console.log(response.data);
         })
         .catch((error) => {
@@ -62,6 +62,7 @@ function LoginForm() {
         });
       console.log(email, password);
     }
+    
   };
 
 
