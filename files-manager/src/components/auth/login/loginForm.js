@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import './style.css';
 import Header from './header';
-
+import axiosClient from '../../../axios';
+import { useNavigate } from "react-router-dom";
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -42,19 +42,36 @@ function LoginForm() {
 
     return !emailError && !passwordError
   };
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     const isValid = validate();
 
     if (isValid) {
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
+      axiosClient.post("/login", formData)
+        .then((response) => {
+          const token = response.data.token;
+          localStorage.setItem("ACCESS_TOKEN", token);
+          localStorage.setItem('userType', 'admin');
+          navigate("/home");
+        })
+        .catch((error) => {
+          alert("fail");
+          console.log(error);
+        });
       console.log(email, password);
     }
+    
   };
 
+
   return (
+    <div className="Login">
     <div className="Header">
       <Header />
-      <div className="form">
+      <div className="form" >
         <div className="form-body">
           
           <div className="email">
@@ -99,6 +116,7 @@ function LoginForm() {
             <div class="footer">
                 <button onClick={()=>handleSubmit()} type="submit" class="btn">Log In</button>
             </div>
+        </div>
         </div>
         </div>
     )       
