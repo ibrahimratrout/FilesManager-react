@@ -53,8 +53,10 @@ function LoginForm() {
       axiosClient.post("/login", formData)
         .then((response) => {
           const token = response.data.token;
+          const type = response.data.type;
+
           localStorage.setItem("ACCESS_TOKEN", token);
-          localStorage.setItem('userType', 'admin');
+          localStorage.setItem('userType', type);
           navigate("/home");
         })
         .catch((error) => {

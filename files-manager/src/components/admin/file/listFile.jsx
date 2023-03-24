@@ -20,7 +20,7 @@ const ListFile = () => {
     }, []);
     const deleteFile = (fileId) => {
         console.log(fileId)
-        axiosClient.delete(`/delete-file/${fileId}`)
+        axiosClient.delete(`/admin/delete-file/${fileId}`)
           .then(response => {
             console.log(response.data);
             setData(data.filter(file => file.id !== fileId));
@@ -31,7 +31,7 @@ const ListFile = () => {
       }
       const exportFile = (fileId) => {
         try {
-          axiosClient.get(`/export-file/${fileId}`, { responseType: 'blob' })
+          axiosClient.get(`/admin/export-file/${fileId}`, { responseType: 'blob' })
             .then((response) => {
               const type = response.headers['content-type'];
               const extension = type.split('/')[1];

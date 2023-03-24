@@ -21,7 +21,7 @@ function User() {
     console.log(userId)
 
     
-    axiosClient.delete(`/delete-user/${userId}`)
+    axiosClient.delete(`/admin/delete-user/${userId}`)
       .then(response => {
         console.log(response.data);
         setUsers(users.filter(user => user.id !== userId));

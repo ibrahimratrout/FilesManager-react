@@ -14,7 +14,7 @@ const ImportFile = () => {
     formData.append("file", file);
     formData.append("label", label);
     formData.append("name", name);
-    axiosClient.post("/import-file", formData)
+    axiosClient.post("/admin/import-file", formData)
       .then((response) => {
         alert("The file imported successfully")
         console.log(response.data);
