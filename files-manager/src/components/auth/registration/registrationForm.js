@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import Header from './header';
+import axiosClient from '../../../axios';
 
 function RegistrationForm() {
   const [name, setName] = useState('');
@@ -66,8 +67,24 @@ function RegistrationForm() {
   const handleSubmit = (e) => {
     const isValid = validate();
 
+
+
     if (isValid) {
-      console.log(name, email, password, confirmPassword);
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+  
+      axiosClient.post("/register", formData)
+        .then((response) => {
+          console.log(response);
+
+        })
+        .catch((error) => {
+          alert("fail");
+          console.log(error);
+        });
+      console.log(email, password);
     }
   };
 

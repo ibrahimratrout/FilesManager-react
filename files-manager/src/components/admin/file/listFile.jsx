@@ -9,7 +9,7 @@ import { saveAs } from 'file-saver';
 const ListFile = () => {
     const [data, setData] = useState([]);
     useEffect(() => {
-        axiosClient.get('/report-file')
+        axiosClient.get('/admin/report-file')
             .then(response => {
                 console.log(response.data)
                 setData(response.data.files);
