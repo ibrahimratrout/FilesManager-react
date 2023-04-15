@@ -26,7 +26,6 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
-        
         {userType === 'admin' && token ? (
           <Route path="/home" element={<AdminHome/>}>
             <Route path="users" element={<AdminUsers/>} />
@@ -40,7 +39,6 @@ function Router() {
             <Route path="import-file" element={<StaffImportFile />} />
             <Route path="edit-file/:id" element={<StaffEditFile />} />
             <Route path="list-file" element={<StaffListFile/>} />
-
           </Route>
         ) : (
           <Route path="/404" element={<NotFound />} />

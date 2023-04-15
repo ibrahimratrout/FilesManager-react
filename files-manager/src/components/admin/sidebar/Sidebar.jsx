@@ -58,23 +58,7 @@ const Sidebar = () => {
               </li>
             </Link>
           </li>
-          <p className="title">SERVICE</p>
-          <li>
-            <Link to="/logs" style={{ textDecoration: "none" }}>
-              <li>
-                <PsychologyOutlinedIcon className="icon" />
-                <span>Logs</span>
-              </li>
-            </Link>
-          </li>
-          <li>
-            <Link to="/logs" style={{ textDecoration: "none" }}>
-              <li>
-                <SettingsApplicationsIcon className="icon" />
-                <span>Settings</span>
-              </li>
-            </Link>
-          </li>
+          
           <p className="title">USER</p>
           <li>
             <Link to="/logs" style={{ textDecoration: "none" }}>
