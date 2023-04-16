@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../home/header/header'
 import Description from '../home/descriotion/description'
+import Contact from '../home/contact/contact'
+
 import Footer from '../home/footer/footer'
 
 function Home() {
@@ -9,8 +11,8 @@ function Home() {
     <div>
     <Header  />
     <Description />
+    <Contact/>
     <Footer  />
-
     </div>
   
   )

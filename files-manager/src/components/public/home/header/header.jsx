@@ -9,7 +9,9 @@ function Header() {
             <a class="navbar-brand" href="#">File Manager</a>
           </div>
           <ul class="nav navbar-nav navbar-right">
-            <button type="button" class="btn btn-light">Log in</button>
+              <a href="/login">
+                <button type="button" class="btn btn-light">Log in</button>
+               </a>
           </ul>
         </div>
       </nav>
