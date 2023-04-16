@@ -1,4 +1,5 @@
 import axios from "axios";
+import CryptoJS from "crypto-js";
 
 const axiosClient = axios.create({
   baseURL: "http://127.0.0.1:8000/api"
@@ -7,13 +8,21 @@ const axiosClient = axios.create({
 
 
 axiosClient.interceptors.request.use((config) => {
-    const token = localStorage.getItem("ACCESS_TOKEN");
+    var token = localStorage.getItem("ACCESS_TOKEN");
     const csrfToken = localStorage.getItem("X-CSRF-TOKEN");
-    config.headers.Authorization = `Bearer ${token}`;
-    config.headers.Accept = "application/json";
-    config.headers["Content-Type"] = "multipart/form-data";
-    config.headers["X-CSRF-TOKEN"] = csrfToken;
+    if(token)
+    {
+      const bytesToken = CryptoJS.AES.decrypt(token, 'filemanager');
+      token = bytesToken.toString(CryptoJS.enc.Utf8);
+      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Accept = "application/json";
+      config.headers["Content-Type"] = "multipart/form-data";
+      config.headers["X-CSRF-TOKEN"] = csrfToken;
+      return config;
+    }
     return config;
+
+   
   });
   
 axiosClient.interceptors.response.use(

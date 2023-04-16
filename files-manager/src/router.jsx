@@ -15,10 +15,17 @@ import StaffHome from './components/staff/home/Home';
 import StaffImportFile from './components/staff/file/ImportFile';
 import StaffEditFile from './components/staff/file/editFile';
 import StaffListFile from './components/staff/file/listFile';
+import CryptoJS from "crypto-js";
+
 
 function Router() {
-  const userType = localStorage.getItem('userType');
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  var userType = localStorage.getItem('userType');
+  var token = localStorage.getItem("ACCESS_TOKEN");
+  if(userType)
+  {
+    const bytesToken = CryptoJS.AES.decrypt(userType, 'filemanager');
+    userType = bytesToken.toString(CryptoJS.enc.Utf8);
+  }
 
   return (
     <BrowserRouter>
@@ -26,7 +33,7 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
-        {userType === 'admin' && token ? (
+        {userType === 'admin'  ? (
           <Route path="/home" element={<AdminHome/>}>
             <Route path="users" element={<AdminUsers/>} />
             <Route path="import-file" element={<AdminImportFile/>} />

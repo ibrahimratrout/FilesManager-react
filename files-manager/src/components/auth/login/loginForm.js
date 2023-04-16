@@ -3,6 +3,8 @@ import './style.css';
 import Header from './header';
 import axiosClient from '../../../axios';
 import { useNavigate } from "react-router-dom";
+import CryptoJS from 'crypto-js';
+
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,18 +53,23 @@ function LoginForm() {
       formData.append("email", email);
       formData.append("password", password);
       axiosClient.post("/login", formData)
-        .then((response) => {
-          const token = response.data.token;
-          const type = response.data.type;
+      .then((response) => {
+        const token = response.data.token;
+        const type = response.data.type;
+    
 
-          localStorage.setItem("ACCESS_TOKEN", token);
-          localStorage.setItem('userType', type);
-          navigate("/home");
-        })
-        .catch((error) => {
-          alert("fail");
-          console.log(error);
-        });
+        const encryptedToken = CryptoJS.AES.encrypt(token, 'filemanager').toString();
+        const encryptedType = CryptoJS.AES.encrypt(type, 'filemanager').toString();
+    
+        localStorage.setItem("ACCESS_TOKEN", encryptedToken);
+        localStorage.setItem('userType', encryptedType);
+    
+        navigate("/home");
+      })
+      .catch((error) => {
+        alert("fail");
+        console.log(error);
+      });
       console.log(email, password);
     }
     

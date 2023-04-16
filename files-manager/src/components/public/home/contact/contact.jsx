@@ -11,6 +11,7 @@ const Contact = () =>{
 
   const handleFormSubmit = (event) => {
     
+    
     event.preventDefault();
     const formData = new FormData();
     formData.append("name", name);
