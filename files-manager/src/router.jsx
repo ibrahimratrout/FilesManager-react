@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Registration from './components/auth/registration/registrationForm';
 import Login from './components/auth/login/loginForm';
+import Logout from './components/auth/logout/logout';
 import Home from './components/public/home/home';
 import NotFound from './components/public/error/notFound';
 
@@ -20,7 +21,6 @@ import CryptoJS from "crypto-js";
 
 function Router() {
   var userType = localStorage.getItem('userType');
-  var token = localStorage.getItem("ACCESS_TOKEN");
   if(userType)
   {
     const bytesToken = CryptoJS.AES.decrypt(userType, 'filemanager');
@@ -33,8 +33,9 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
+        <Route path="/logout" element={<Logout />} />
         {userType === 'admin'  ? (
-          <Route path="/home" element={<AdminHome/>}>
+          <Route path="/admin/home" element={<AdminHome/>}>
             <Route path="users" element={<AdminUsers/>} />
             <Route path="import-file" element={<AdminImportFile/>} />
             <Route path="add-user" element={<AdminAddUser/>} />

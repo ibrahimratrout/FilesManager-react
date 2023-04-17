@@ -1,7 +1,6 @@
 import Sidebar from "../sidebar/Sidebar";
 import Navbar from "../navbar/Navbar";
-
-import { Outlet } from 'react-router-dom'; // <-- import Outlet
+import { Outlet } from 'react-router-dom'; 
 import "./home.scss";
 
 

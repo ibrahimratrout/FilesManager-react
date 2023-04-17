@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
 const NotFound = () => {
+
+
   return (
     <div style={{ textAlign: 'center' }}>
       <h1 style={{ fontSize: '10rem', margin: '0' }}>404</h1>

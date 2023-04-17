@@ -1,10 +1,7 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ListIcon from '@mui/icons-material/List';
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import PublishIcon from '@mui/icons-material/Publish';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
@@ -61,7 +58,7 @@ const Sidebar = () => {
           
           <p className="title">USER</p>
           <li>
-            <Link to="/logs" style={{ textDecoration: "none" }}>
+            <Link to="/logout" style={{ textDecoration: "none" }}>
               <li>
                 <ExitToAppIcon className="icon" />
                 <span>Logout</span>

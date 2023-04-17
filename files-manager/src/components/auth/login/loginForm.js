@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './style.css';
 import Header from './header';
 import axiosClient from '../../../axios';
-import { useNavigate } from "react-router-dom";
 import CryptoJS from 'crypto-js';
 
 function LoginForm() {
@@ -44,7 +43,6 @@ function LoginForm() {
 
     return !emailError && !passwordError
   };
-  const navigate = useNavigate();
   const handleSubmit = (e) => {
     const isValid = validate();
 
@@ -56,21 +54,22 @@ function LoginForm() {
       .then((response) => {
         const token = response.data.token;
         const type = response.data.type;
+        if (type == 'admin') {
+          window.location.href = '/admin/home';
+        } else if(type == 'staff') {
+          window.location.href = '/home';
+        }
+        
+      const encryptedToken = CryptoJS.AES.encrypt(token, 'filemanager').toString();
+      const encryptedType = CryptoJS.AES.encrypt(type, 'filemanager').toString();
+      localStorage.setItem("ACCESS_TOKEN", encryptedToken);
+      localStorage.setItem('userType', encryptedType);
     
-
-        const encryptedToken = CryptoJS.AES.encrypt(token, 'filemanager').toString();
-        const encryptedType = CryptoJS.AES.encrypt(type, 'filemanager').toString();
-    
-        localStorage.setItem("ACCESS_TOKEN", encryptedToken);
-        localStorage.setItem('userType', encryptedType);
-    
-        navigate("/home");
       })
       .catch((error) => {
         alert("fail");
         console.log(error);
       });
-      console.log(email, password);
     }
     
   };
