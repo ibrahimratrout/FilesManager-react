@@ -52,6 +52,9 @@ function LoginForm() {
       formData.append("password", password);
       axiosClient.post("/login", formData)
       .then((response) => {
+        console.log( "response"+ response.status)
+        if (response.status === 200) {
+       
         const token = response.data.token;
         const type = response.data.type;
         if (type == 'admin') {
@@ -59,22 +62,26 @@ function LoginForm() {
         } else if(type == 'staff') {
           window.location.href = '/home';
         }
-        
-      const encryptedToken = CryptoJS.AES.encrypt(token, 'filemanager').toString();
-      const encryptedType = CryptoJS.AES.encrypt(type, 'filemanager').toString();
-      localStorage.setItem("ACCESS_TOKEN", encryptedToken);
-      localStorage.setItem('userType', encryptedType);
-    
+        const encryptedToken = CryptoJS.AES.encrypt(token, 'filemanager').toString();
+        const encryptedType = CryptoJS.AES.encrypt(type, 'filemanager').toString();
+        localStorage.setItem("ACCESS_TOKEN", encryptedToken);
+        localStorage.setItem('userType', encryptedType);
+        alert("Successfully logged in");
+      }
       })
       .catch((error) => {
-        alert("fail");
-        console.log(error);
+         
+        if (error.response.status === 401) {
+          alert("Your email or password is not correct!");
+        } else if (error.response.status === 422) {
+          alert("Validation Error");
+        }else
+        {
+          alert("Error Occurred while login");
+        }
       });
     }
-    
-  };
-
-
+  }
   return (
     <div className="Login">
     <div className="Header">
