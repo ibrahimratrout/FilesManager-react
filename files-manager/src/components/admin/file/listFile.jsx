@@ -19,7 +19,8 @@ const ListFile = () => {
             });
     }, []);
     const deleteFile = (fileId) => {
-        console.log(fileId)
+        if (window.confirm('Are you sure you want to delete this file?')){
+        //console.log(fileId)
         axiosClient.delete(`/admin/delete-file/${fileId}`)
           .then(response => {
             console.log(response.data);
@@ -29,6 +30,7 @@ const ListFile = () => {
             console.log(error);
           });
       }
+    }
       const exportFile = (fileId) => {
         try {
           axiosClient.get(`/admin/export-file/${fileId}`, { responseType: 'blob' })
