@@ -1,6 +1,8 @@
 import "./style.scss";
 import { useState } from "react";
 import axiosClient from "../../../axios";
+import { useNavigate } from "react-router-dom";
+
 
 const AddUser = () => {
 
@@ -9,6 +11,7 @@ const AddUser = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const navigate = useNavigate();
     const [nameError, setNameError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
@@ -24,12 +27,16 @@ const AddUser = () => {
 
         axiosClient.post("/register-employee", formData)
             .then((response) => {
-                alert("successfully")
+                if (response.status === 200){
 
+                alert("The employee added successfully")
+                navigate("/admin/home/users");
+                }
             })
             .catch((error) => {
-                alert("fail")
-                console.log(error);
+                if (error.response.status === 404){
+                alert("This employee is already exist!");
+                }
             });
     }
 

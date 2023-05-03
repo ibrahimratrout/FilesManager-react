@@ -18,10 +18,8 @@ function User() {
       });
   }, []);
   const deleteUser = (userId) => {
-    console.log(userId)
-
-    
-    axiosClient.delete(`/admin/delete-user/${userId}`)
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      axiosClient.delete(`/admin/delete-user/${userId}`)
       .then(response => {
         console.log(response.data);
         setUsers(users.filter(user => user.id !== userId));
@@ -30,6 +28,7 @@ function User() {
         console.log(error);
       });
   }
+}
 
   return (
     <div className='contener'>

@@ -2,11 +2,18 @@
 import "./style.scss";
 import { useState } from "react";
 import axiosClient from "../../../axios";
+import { useNavigate } from "react-router-dom";
+
+
+
+
 
 const ImportFile = () => {
   const [file, setFile] = useState("");
   const [label, setLabel] = useState("");
   const [name, setName] = useState("");
+  const navigate = useNavigate();
+
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -16,11 +23,13 @@ const ImportFile = () => {
     formData.append("name", name);
     axiosClient.post("/admin/import-file", formData)
       .then((response) => {
+        if (response.status === 200){
         alert("The file imported successfully")
-        console.log(response.data);
+        navigate("/admin/home/list-file")
+        }
       })
       .catch((error) => {
-        alert("The file imported fail")
+        alert("The file imported failled")
         console.log(error);
       });
   }

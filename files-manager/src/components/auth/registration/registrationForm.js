@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './style.css';
 import Header from './header';
 import axiosClient from '../../../axios';
+import { useNavigate } from "react-router-dom";
 
 function RegistrationForm() {
   const [name, setName] = useState('');
@@ -9,6 +10,7 @@ function RegistrationForm() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const navigate = useNavigate();
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -74,15 +76,24 @@ function RegistrationForm() {
       formData.append("name", name);
       formData.append("email", email);
       formData.append("password", password);
+      
   
       axiosClient.post("/register", formData)
         .then((response) => {
-          console.log(response);
-
-        })
+          if (response.status === 200){
+          alert("Successfully creatting account")
+          navigate("/login");
+                }
+                })
         .catch((error) => {
-          alert("fail");
-          console.log(error);
+          if (error.response.status === 404) {
+            alert("Your email is already exit!");
+          } else if (error.response.status === 422) {
+            alert("Validation Error");
+          }else
+          {
+            alert("Error Occurred while register");
+          }
         });
       console.log(email, password);
     }
