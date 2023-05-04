@@ -11,6 +11,7 @@ import AdminAddUser from './components/admin/user/addUser';
 import AdminImportFile from './components/admin/file/ImportFile';
 import AdminListFile from './components/admin/file/listFile';
 import AdminEditFile from './components/admin/file/editFile';
+import AdminDashboard from './components/admin/dashboard/dashboard';
 
 import StaffHome from './components/staff/home/Home';
 import StaffImportFile from './components/staff/file/ImportFile';
@@ -36,6 +37,7 @@ function Router() {
         <Route path="/logout" element={<Logout />} />
         {userType === 'admin'  ? (
           <Route path="/admin/home" element={<AdminHome/>}>
+            <Route path="dashboard" element={<AdminDashboard/>} />
             <Route path="users" element={<AdminUsers/>} />
             <Route path="import-file" element={<AdminImportFile/>} />
             <Route path="add-user" element={<AdminAddUser/>} />

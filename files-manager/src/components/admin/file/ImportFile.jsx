@@ -1,19 +1,16 @@
-
 import "./style.scss";
 import { useState } from "react";
 import axiosClient from "../../../axios";
 import { useNavigate } from "react-router-dom";
-
-
-
-
+import { DotLoader } from 'react-spinners';
 
 const ImportFile = () => {
   const [file, setFile] = useState("");
   const [label, setLabel] = useState("");
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
-
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -21,16 +18,19 @@ const ImportFile = () => {
     formData.append("file", file);
     formData.append("label", label);
     formData.append("name", name);
+    setLoading(true);
     axiosClient.post("/admin/import-file", formData)
       .then((response) => {
-        if (response.status === 200){
-        alert("The file imported successfully")
-        navigate("/admin/home/list-file")
+        if (response.status === 200) {
+          setLoading(false);
+          alert("The file imported successfully")
+          navigate("/admin/home/list-file")
         }
       })
       .catch((error) => {
+        setLoading(false);
         alert("The file imported failled")
-        console.log(error);
+      
       });
   }
 
@@ -58,8 +58,8 @@ const ImportFile = () => {
           <div className="right">
             <form onSubmit={handleFormSubmit}>
               <div className="col-md-12">
-                <label htmlFor="name">Flie Name</label>
-                <input type="text" id="name" onChange={(e) => handleInputChange(e)} className="form-control rounded-0" placeholder="Flie Name" required />
+                <label htmlFor="name">File Name</label>
+                <input type="text" id="name" onChange={(e) => handleInputChange(e)} className="form-control rounded-0" placeholder="File Name" required />
                 <div className="error"></div>
               </div>
               <div className="col-md-12">
@@ -67,19 +67,20 @@ const ImportFile = () => {
                 <input type="text" id="label" onChange={(e) => handleInputChange(e)} className="form-control rounded-0" placeholder="Label" required />
                 <div className="error"></div>
               </div>
-              <div className="formInput" class="col-md-12">
-                <label class="form-label" for="customFile">Input File </label>
-                <input type="file" id="file" onChange={(e) => handleInputChange(e)} class="form-control" required />
+              <div className="formInput col-md-12">
+                <label className="form-label" htmlFor="customFile">Input File</label>
+                <input type="file" id="file" onChange={(e) => handleInputChange(e)} className="form-control" required />
               </div>
-              <button type="submit" class="btn btn-secondary btn-lg">
+              <button type="submit" className="btn btn-secondary btn-lg">
                 Send
               </button>
             </form>
-
           </div>
         </div>
+        <div className="loading-spinner">
+          <DotLoader color={'#123abc'} loading={loading} />
+        </div>
       </div>
-
     </div>
 
   )

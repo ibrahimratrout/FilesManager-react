@@ -3,18 +3,21 @@ import axiosClient from '../../../axios';
 import "./style.scss";
 import { Link } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { DotLoader } from 'react-spinners';
 
 function User() {
   const [users, setUsers] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true)
     axiosClient.get('/report-user')
       .then(response => {
-        console.log(response.data)
+        setLoading(false)
         setUsers(response.data.users);
       })
       .catch(error => {
-        console.log(error);
+        setLoading(false)
+        alert("Failed to retrieve data for users")
       });
   }, []);
   const deleteUser = (userId) => {
@@ -25,18 +28,22 @@ function User() {
         setUsers(users.filter(user => user.id !== userId));
       })
       .catch(error => {
-        console.log(error);
+        alert("An error occurred deleting the employee to be deleted");
       });
   }
 }
 
   return (
-    <div className='contener'>
+    <div className='listuser'>
       <div class="row" id ="title">
         <div  class="col-md-10">
           <h3>User List</h3>
         </div>
       </div>
+      <div class='loading'>
+                <DotLoader color={'#123abc'} loading={loading} />
+            </div>
+            {!loading && (
       <table class="table">
         <thead>
           <tr>
@@ -66,6 +73,8 @@ function User() {
           ))}
         </tbody>
       </table>
+            )}
+        
     </div>
   );
 }

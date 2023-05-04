@@ -7,7 +7,6 @@
 
     .top,
     .bottom {
-      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
       box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
       padding: 10px;
       margin: 20px;
@@ -59,31 +58,42 @@
               border-bottom: 1px solid gray;
             }
           }
-
-        
         }
       }
     }
   }
-}
-.listfile
-{
-  margin: 0.5%;
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+  }
 }
 
-.new .edit
-{
- color: #e8b007;
- margin-left: 10%;
-
+.listfile {
+  width: 100%;
+  display: flex;
 }
-.new .delete
-{
+
+
+.listfile .edit {
+  color: #e8b007;
+  margin-left: 10%;
+}
+
+.listfile .delete {
   margin: 10%;
-  color: #F44336
+  color: #f44336;
 }
-.new .export
-{
+
+.listfile .export {
   margin-right: 10%;
-  color: #00693f
+  color: #00693f;
+}
+.listfile .loading
+{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

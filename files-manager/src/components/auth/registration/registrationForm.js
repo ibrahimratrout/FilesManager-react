@@ -3,13 +3,14 @@ import './style.css';
 import Header from './header';
 import axiosClient from '../../../axios';
 import { useNavigate } from "react-router-dom";
+import { DotLoader } from 'react-spinners';
 
 function RegistrationForm() {
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
   const navigate = useNavigate();
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -76,8 +77,7 @@ function RegistrationForm() {
       formData.append("name", name);
       formData.append("email", email);
       formData.append("password", password);
-      
-  
+      setLoading(true)
       axiosClient.post("/register", formData)
         .then((response) => {
           if (response.status === 200){
@@ -87,11 +87,14 @@ function RegistrationForm() {
                 })
         .catch((error) => {
           if (error.response.status === 404) {
+            setLoading(false)
             alert("Your email is already exit!");
           } else if (error.response.status === 422) {
+            setLoading(false)
             alert("Validation Error");
           }else
           {
+            setLoading(false)
             alert("Error Occurred while register");
           }
         });
@@ -164,6 +167,9 @@ function RegistrationForm() {
             <div class="footer">
                 <button onClick={()=>handleSubmit()} type="submit" class="btn">Register</button>
             </div>
+            <div className="loading-spinner">
+            <DotLoader color={'#123abc'} loading={loading} />
+          </div>
         </div>
         </div>
     )       
