@@ -83,11 +83,7 @@ const ListFile = () => {
                                                 <GetAppIcon />
                                             </div>
                                         </Link>
-                                        <Link to={{ pathname: `/home/edit-file/${file.id}`, state: { name: file.file_name } }}>
-                                            <div className="edit">
-                                                <ModeEditIcon />
-                                            </div>
-                                        </Link>
+                                        
                                         <Link to="" onClick={() => deleteFile(file.id)}>
                                             <div className="delete">
                                                 <DeleteIcon />
