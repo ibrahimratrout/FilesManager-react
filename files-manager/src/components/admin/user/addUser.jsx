@@ -25,8 +25,9 @@ const AddUser = () => {
         formData.append("email", email);
         formData.append("password", password);
 
-        axiosClient.post("/register-employee", formData)
         setLoading(true)
+        axiosClient.post("/register-employee", formData)
+        
             .then((response) => {
                 if (response.status === 200) {
                     setLoading(false);
